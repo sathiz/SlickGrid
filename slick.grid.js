@@ -175,6 +175,9 @@ if (typeof Slick === "undefined") {
     var counter_rows_rendered = 0;
     var counter_rows_removed = 0;
 
+    var topSpace = 0;
+    var courseRowTop = 0;
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // Initialization
@@ -1375,7 +1378,15 @@ if (typeof Slick === "undefined") {
         rowCss += " " + metadata.cssClasses;
       }
 
-      stringArray.push("<div class='ui-widget-content " + rowCss + "' style='top:" + (options.rowHeight * row - offset) + "px'>");
+      topSpace = row * 10;
+
+      if(rowCss.indexOf('courseRow') != -1)
+        courseRowTop +=10
+
+      topSpace -= courseRowTop;
+
+
+      stringArray.push("<div class='ui-widget-content " + rowCss + "' style='top:" + (options.rowHeight * row - offset + topSpace ) + "px'>");
 
       var colspan, m;
       for (var i = 0, ii = columns.length; i < ii; i++) {
@@ -1896,6 +1907,7 @@ if (typeof Slick === "undefined") {
         cleanUpAndRenderCells(rendered);
       }
 
+      courseRowTop = 0;
       // render missing rows
       renderRows(rendered);
 
